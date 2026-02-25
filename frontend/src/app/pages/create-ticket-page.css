@@ -1,0 +1,153 @@
+.create-panel {
+  margin-top: 24px;
+  background: rgba(18, 26, 42, 0.75);
+  border-radius: 18px;
+  padding: 20px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: min(58.3vw, 755px);
+  min-width: 320px;
+}
+
+.type-title-row {
+  display: grid;
+  grid-template-columns: 78% 20%;
+  column-gap: 2%;
+}
+
+.field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+textarea {
+  min-height: 200px;
+  resize: vertical;
+}
+
+.type-select {
+  position: relative;
+}
+
+.type-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(12, 18, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: inherit;
+  text-align: left;
+}
+
+.type-trigger .chevron {
+  opacity: 0.7;
+}
+
+.type-panel {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  padding: 6px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 18, 30, 0.95);
+  display: grid;
+  gap: 6px;
+}
+
+.type-panel button {
+  text-align: left;
+  padding: 8px 10px;
+  border-radius: 10px;
+  border: none;
+  background: transparent;
+  color: inherit;
+}
+
+.type-panel button:hover {
+  background: rgba(70, 135, 255, 0.16);
+}
+
+.assignee-select {
+  position: relative;
+}
+
+.assignee-trigger {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: 10px 12px;
+  background: rgba(12, 18, 30, 0.6);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  color: inherit;
+  text-align: left;
+}
+
+.assignee-trigger .chevron {
+  opacity: 0.7;
+}
+
+.assignee-panel {
+  position: absolute;
+  z-index: 10;
+  left: 0;
+  right: 0;
+  margin-top: 6px;
+  padding: 10px;
+  border-radius: 14px;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  background: rgba(12, 18, 30, 0.95);
+  display: grid;
+  grid-template-columns: 1fr;
+  gap: 8px;
+  max-height: 220px;
+  overflow: auto;
+}
+
+.assignee-panel label {
+  display: grid;
+  grid-template-columns: 16px 1fr;
+  align-items: center;
+  column-gap: 10px;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+.assignee-panel label span {
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.actions {
+  display: flex;
+  justify-content: flex-end;
+}
+
+.status {
+  color: var(--accent);
+  font-size: 0.85rem;
+}
+
+.error {
+  color: var(--danger);
+  font-size: 0.85rem;
+}
+
+@media (max-width: 900px) {
+  .create-panel {
+    width: 100%;
+    min-width: auto;
+  }
+}

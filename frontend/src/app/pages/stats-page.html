@@ -1,0 +1,120 @@
+<section class="stats-panel">
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-title">Status</div>
+      <div class="stat-list">
+          <div *ngFor="let item of statusStats">
+            <span>{{ item.label }}</span>
+          <div class="bar">
+            <span [style.width]="barWidth(item.count, statusMax)"></span>
+          </div>
+            <span class="stat-value">{{ item.count }}</span>
+          </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Open Priorities</div>
+      <div class="stat-list">
+          <div *ngFor="let item of priorityStats">
+          <span>{{ item.label }}</span>
+          <div class="bar">
+              <span [style.width]="barWidth(item.count, priorityMax)"></span>
+          </div>
+          <span class="stat-value">{{ item.count }}</span>
+        </div>
+      </div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-title">Companies</div>
+      <div class="stat-list">
+          <div *ngFor="let item of companyStats">
+          <span>{{ item.label }}</span>
+          <div class="bar">
+              <span [style.width]="barWidth(item.count, companyMax)"></span>
+          </div>
+          <span class="stat-value">{{ item.count }}</span>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="recent-panel">
+  <div class="panel-header">
+    <h2>Recent Tickets</h2>
+    <div class="panel-actions">
+      <button type="button" class="ghost" (click)="runAutomation()" [disabled]="automationBusy">
+        {{ automationBusy ? 'Running...' : 'Run Automation' }}
+      </button>
+      <button type="button" class="ghost" (click)="loadTickets()">Refresh</button>
+    </div>
+  </div>
+  <div class="ticket-table">
+    <div class="ticket-row header">
+      <span>Ticket</span>
+      <span>Title</span>
+      <span>Status</span>
+      <span>Priority</span>
+      <span>Assignees</span>
+      <span></span>
+    </div>
+    <div class="ticket-row" *ngFor="let ticket of recentTickets">
+      <button type="button" class="ticket-link" (click)="goToHistory(ticket)">
+        {{ ticketNumber(ticket) }}
+      </button>
+      <span class="ticket-title">{{ ticket.title }}</span>
+      <span
+        class="ticket-status"
+        [class.status-new]="isNew(ticket.status)"
+        [class.status-pending]="isPending(ticket.status)"
+        [class.status-in-progress]="isInProgress(ticket.status)"
+        [class.status-resolved]="isResolved(ticket.status)"
+      >
+        {{ statusLabel(ticket.status) }}
+      </span>
+      <span class="ticket-priority">{{ priorityLabel(ticket.priority) }}</span>
+      <span class="ticket-assignees">
+        {{ formatAssignees(ticket.assignees_json) || 'Unassigned' }}
+      </span>
+      <div class="ticket-actions">
+        <button type="button" class="ghost" (click)="goToHistory(ticket)">History</button>
+        <button type="button" (click)="startEdit(ticket)">Edit</button>
+      </div>
+    </div>
+    <div class="empty" *ngIf="recentTickets.length === 0">No tickets yet.</div>
+  </div>
+
+  <div class="status" *ngIf="status">{{ status }}</div>
+
+  <div class="edit-card" *ngIf="editing">
+    <h3>Edit Ticket</h3>
+    <label>Title</label>
+    <input [(ngModel)]="editForm.title" />
+    <label>Status</label>
+    <select [(ngModel)]="editForm.status">
+      <option *ngFor="let option of statusOptions" [value]="option.value">
+        {{ option.label }}
+      </option>
+    </select>
+    <label>Priority</label>
+    <select [(ngModel)]="editForm.priority">
+      <option *ngFor="let option of priorityOptions" [value]="option.label">
+        {{ option.label }}
+      </option>
+    </select>
+    <label>Company</label>
+    <input [(ngModel)]="editForm.company" />
+    <label>Assignees (multi-select)</label>
+    <select multiple [(ngModel)]="editForm.assignees">
+      <option *ngFor="let option of assigneeOptions" [value]="option">
+        {{ option }}
+      </option>
+    </select>
+    <div class="edit-actions">
+      <button type="button" class="ghost" (click)="cancelEdit()">Cancel</button>
+      <button type="button" class="primary" (click)="saveEdit()">Save</button>
+    </div>
+  </div>
+
+  <div class="error" *ngIf="error">{{ error }}</div>
+</section>

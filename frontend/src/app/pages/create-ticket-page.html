@@ -1,0 +1,66 @@
+<section class="create-panel">
+  <h2>Create Ticket</h2>
+  <div class="type-title-row">
+    <div class="field">
+      <label>Title</label>
+      <input [(ngModel)]="title" placeholder="Short title" />
+    </div>
+    <div class="field">
+      <label>Type</label>
+      <div class="type-select" [class.open]="typeOpen">
+        <button type="button" class="type-trigger" (click)="toggleTypeOpen()">
+          <span>{{ typeLabel }}</span>
+          <span class="chevron">▾</span>
+        </button>
+        <div class="type-panel" *ngIf="typeOpen">
+          <button
+            type="button"
+            *ngFor="let option of typeOptions"
+            (click)="selectType(option)"
+          >
+            {{ option.label }}
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <label>Company</label>
+  <input [(ngModel)]="company" placeholder="Company name" />
+  <label>Priority</label>
+  <select [(ngModel)]="priority">
+    <option value="Automatic">Automatic (AI inferred)</option>
+    <option value="Low">Low</option>
+    <option value="Medium">Medium</option>
+    <option value="High">High</option>
+    <option value="Critical">Critical</option>
+  </select>
+  <label>Assignees</label>
+  <div class="assignee-select" [class.open]="assigneeOpen">
+    <button type="button" class="assignee-trigger" (click)="toggleAssigneeOpen()">
+      <span>{{ assigneeLabel }}</span>
+      <span class="chevron">▾</span>
+    </button>
+    <div class="assignee-panel" *ngIf="assigneeOpen">
+      <label *ngFor="let option of assigneeOptions">
+        <input
+          type="checkbox"
+          [checked]="isAssigneeSelected(option)"
+          (change)="toggleAssignee(option, $event.target.checked)"
+        />
+        <span>{{ option }}</span>
+      </label>
+    </div>
+  </div>
+  <label>Issue</label>
+  <textarea
+    [(ngModel)]="rawText"
+    placeholder="Paste the raw user report, logs, or notes."
+  ></textarea>
+  <div class="actions">
+    <button type="button" class="primary" (click)="submitTicket()" [disabled]="busy">
+      {{ busy ? 'Working...' : 'Create Ticket' }}
+    </button>
+  </div>
+  <div class="status" *ngIf="status">{{ status }}</div>
+  <div class="error" *ngIf="error">{{ error }}</div>
+</section>

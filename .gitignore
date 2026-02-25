@@ -1,0 +1,36 @@
+node_modules/
+dist/
+coverage/
+
+# Environment and secrets
+.env
+.env.*
+!.env.example
+!**/.env.example
+*.pem
+*.key
+*.pfx
+*.p12
+*.crt
+*.cer
+
+# Python/venv
+.venv/
+venv/
+__pycache__/
+*.pyc
+.pytest_cache/
+
+# Logs and caches
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.cache/
+
+# OS and IDE
+.DS_Store
+Thumbs.db
+.vscode/
+.idea/

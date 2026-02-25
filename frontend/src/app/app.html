@@ -1,0 +1,86 @@
+<div class="app">
+  <div class="auth-layer" *ngIf="!isAuthed">
+    <div class="glass auth-card">
+      <div class="hero-title">Incident Triage Ops</div>
+      <div class="hero-sub">Multi-agent debate grounded on evidence.</div>
+      <div class="auth-toggle">
+        <button type="button" [class.active]="authMode === 'login'" (click)="setAuthMode('login')">
+          Login
+        </button>
+        <button type="button" [class.active]="authMode === 'register'" (click)="setAuthMode('register')">
+          Register
+        </button>
+      </div>
+      <label>Email</label>
+      <input
+        [(ngModel)]="authForm.email"
+        placeholder="agent@ops.local"
+        autocomplete="email"
+      />
+      <label>Password</label>
+      <input
+        type="password"
+        [(ngModel)]="authForm.password"
+        placeholder="******"
+        autocomplete="current-password"
+      />
+      <div *ngIf="authMode === 'register'">
+        <label>Role</label>
+        <select [(ngModel)]="authForm.role">
+          <option value="agent">Agent</option>
+          <option value="manager">Manager</option>
+          <option value="engineer">Engineer</option>
+        </select>
+      </div>
+      <div class="status" *ngIf="status">{{ status }}</div>
+      <div class="error" *ngIf="error">{{ error }}</div>
+      <button type="button" class="primary" (click)="handleAuth()" [disabled]="busy">
+        {{ busy ? 'Working...' : (authMode === 'login' ? 'Enter Ops' : 'Create Account') }}
+      </button>
+    </div>
+  </div>
+
+  <ng-container *ngIf="isAuthed">
+    <header class="top-bar glass">
+      <div>
+        <div class="brand">Incident Triage Ops</div>
+        <div class="tagline">Live debate. Confident outcomes.</div>
+      </div>
+      <div class="top-actions">
+        <nav class="nav">
+          <a routerLink="/stats" routerLinkActive="active">Stats</a>
+          <a routerLink="/create" routerLinkActive="active">Create Ticket</a>
+          <a routerLink="/history" routerLinkActive="active">Ticket History</a>
+          <div class="nav-dropdown about-dropdown" [class.open]="aboutOpen">
+            <button type="button" class="nav-button about-button" (click)="toggleAbout()">
+              About
+            </button>
+            <div class="nav-menu about-menu" *ngIf="aboutOpen">
+              <div class="nav-menu-title about-menu-title">MATR</div>
+              <p>
+                MATR is a PoC of a ticketing system, where the tickets are resolved by agents. Not an
+                IT team. Each agent is a domain expert.
+              </p>
+              <div class="nav-menu-meta about-menu-meta">Version: 1.0.0</div>
+              <div class="nav-menu-meta about-menu-meta">Developer: Babak Solhjoo</div>
+              <a
+                class="nav-menu-link about-menu-link"
+                href="https://www.linkedin.com/in/babak-solhjoo-533938a2/"
+                target="_blank"
+                rel="noopener"
+              >
+                <span class="nav-menu-link-icon about-menu-link-icon" aria-hidden="true">LinkedIn</span>
+              </a>
+            </div>
+          </div>
+        </nav>
+        <div class="user-pill">{{ role }}</div>
+        <button type="button" class="ghost" (click)="logout()">Logout</button>
+      </div>
+    </header>
+
+    <main class="page">
+      <router-outlet></router-outlet>
+    </main>
+  </ng-container>
+</div>
